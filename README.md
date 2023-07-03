@@ -31,7 +31,9 @@ Deployment performing using serverless framework. For local installation please 
 
 ### .env
 
+```
 API_ID - API GW Id     
 UP_ID - User Pool Id     
 CL_ID - Client Id     
-REGION - Region    
+REGION - Region   
+``` 
