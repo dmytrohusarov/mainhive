@@ -1,0 +1,47 @@
+service: mainhive
+variablesResolutionMode: 20230702
+useDotenv: true
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-python-requirements
+
+provider:
+  name: aws
+  region: ${env:REGION}
+  runtime: python3.9
+  stage: 'dev'
+  timeout: 30
+  memorySize: 256
+  logRetentionInDays: 30
+  tracing:
+    lambda: true
+  httpApi:
+    id: ${env:API_ID}
+    metrics: true
+    useProviderTags: true
+
+package:
+  individually: true
+  patterns:
+    - '!./**'
+
+resources:
+  - ${file(./roles.yaml)}
+
+functions:
+  cognito:
+    name: cognito-${self:provider.stage}
+    handler: lambda.lambda_handler
+    role: !GetAtt LambdaCommonRole.Arn
+    description: Cognito handler
+    environment:
+      UP_ID: ${env:UP_ID}
+      CL_ID: ${env:CL_ID}
+    package:
+      patterns:
+        - lambda.py
+        - app/**
+    events:
+      - httpApi:
+          method: POST
+          path: /cognito

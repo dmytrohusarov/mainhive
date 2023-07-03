@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cognito-identity:Describe*",
+        "cognito-identity:Get*",
+        "cognito-identity:List*",
+        "cognito-idp:AdminGetUser",
+        "cognito-idp:Describe*",
+        "cognito-idp:List*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
